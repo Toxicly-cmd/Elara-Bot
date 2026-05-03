@@ -1,11 +1,12 @@
+from __future__ import annotations
 from storage.engine import CollectionStore, NOW
-from reo.console.logging import logger
+from Elara.console.logging import logger
 
 CollectionName = 'antinuke_settings'
 
 _store = CollectionStore(
     name=CollectionName,
-    defaults={'enabled': False, 'type': 'normal', 'anti_channel_create': False, 'anti_channel_create_limit': 1, 'anti_channel_create_punishment': 'kick', 'anti_channel_delete': False, 'anti_channel_delete_limit': 1, 'anti_channel_delete_punishment': 'kick', 'anti_channel_update': False, 'anti_channel_update_limit': 1, 'anti_channel_update_punishment': 'kick', 'anti_role_create': False, 'anti_role_create_limit': 1, 'anti_role_create_punishment': 'kick', 'anti_role_delete': False, 'anti_role_delete_limit': 1, 'anti_role_delete_punishment': 'kick', 'anti_role_update': False, 'anti_role_update_limit': 1, 'anti_role_update_punishment': 'kick', 'anti_member_ban': False, 'anti_member_ban_limit': 1, 'anti_member_ban_punishment': 'kick', 'anti_member_unban': False, 'anti_member_unban_limit': 1, 'anti_member_unban_punishment': 'kick', 'anti_member_kick': False, 'anti_member_kick_limit': 1, 'anti_member_kick_punishment': 'kick', 'anti_member_update': False, 'anti_member_update_limit': 1, 'anti_member_update_punishment': 'kick', 'anti_bot_add': False, 'anti_bot_add_limit': 1, 'anti_bot_add_punishment': 'kick', 'anti_invite_delete': False, 'anti_invite_delete_limit': 1, 'anti_invite_delete_punishment': 'kick', 'anti_webhook_create': False, 'anti_webhook_create_limit': 1, 'anti_webhook_create_punishment': 'kick', 'anti_webhook_delete': False, 'anti_webhook_delete_limit': 1, 'anti_webhook_delete_punishment': 'kick', 'anti_webhook_update': False, 'anti_webhook_update_limit': 1, 'anti_webhook_update_punishment': 'kick', 'anti_server_update': False, 'anti_server_update_limit': 1, 'anti_server_update_punishment': 'kick', 'anti_emote_create': False, 'anti_emote_create_limit': 1, 'anti_emote_create_punishment': 'kick', 'anti_emote_delete': False, 'anti_emote_delete_limit': 1, 'anti_emote_delete_punishment': 'kick', 'anti_emote_update': False, 'anti_emote_update_limit': 1, 'anti_emote_update_punishment': 'kick', 'anti_prune_member': False, 'anti_prune_member_limit': 1, 'anti_prune_member_punishment': 'kick', 'anti_everyone_mention': False, 'anti_everyone_mention_limit': 1, 'anti_everyone_mention_punishment': 'mute', 'created_at': NOW},
+    defaults={'enabled': False, 'type': 'normal', 'anti_channel_create': False, 'anti_channel_create_limit': 1, 'anti_channel_create_punishment': 'kick', 'anti_channel_delete': False, 'anti_channel_delete_limit': 1, 'anti_channel_delete_punishment': 'kick', 'anti_channel_update': False, 'anti_channel_update_limit': 1, 'anti_channel_update_punishment': 'kick', 'anti_role_create': False, 'anti_role_create_limit': 1, 'anti_role_create_punishment': 'kick', 'anti_role_delete': False, 'anti_role_delete_limit': 1, 'anti_role_delete_punishment': 'kick', 'anti_role_update': False, 'anti_role_update_limit': 1, 'anti_role_update_punishment': 'kick', 'anti_member_ban': False, 'anti_member_ban_limit': 1, 'anti_member_ban_punishment': 'kick', 'anti_member_unban': False, 'anti_member_unban_limit': 1, 'anti_member_unban_punishment': 'kick', 'anti_member_kick': False, 'anti_member_kick_limit': 1, 'anti_member_kick_punishment': 'kick', 'anti_member_update': False, 'anti_member_update_limit': 1, 'anti_member_update_punishment': 'kick', 'anti_bot_add': False, 'anti_bot_add_limit': 1, 'anti_bot_add_punishment': 'kick', 'anti_invite_delete': False, 'anti_invite_delete_limit': 1, 'anti_invite_delete_punishment': 'kick', 'anti_webhook_create': False, 'anti_webhook_create_limit': 1, 'anti_webhook_create_punishment': 'kick', 'anti_webhook_delete': False, 'anti_webhook_delete_limit': 1, 'anti_webhook_delete_punishment': 'kick', 'anti_webhook_update': False, 'anti_webhook_update_limit': 1, 'anti_webhook_update_punishment': 'kick', 'anti_server_update': False, 'anti_server_update_limit': 1, 'anti_server_update_punishment': 'kick', 'anti_emote_create': False, 'anti_emote_create_limit': 1, 'anti_emote_create_punishment': 'kick', 'anti_emote_delete': False, 'anti_emote_delete_limit': 1, 'anti_emote_delete_punishment': 'kick', 'anti_emote_update': False, 'anti_emote_update_limit': 1, 'anti_emote_update_punishment': 'kick', 'anti_prune_member': False, 'anti_prune_member_limit': 1, 'anti_prune_member_punishment': 'kick', 'anti_everyone_mention': False, 'anti_everyone_mention_limit': 1, 'anti_everyone_mention_punishment': 'mute', 'wall_on': False, 'autorecovery': False, 'zplus': False, 'betrayalguard': False, 'trustlimit': 5, 'created_at': NOW},
     unique_sets=[['guild_id']],
     json_fields=set([]),
     datetime_fields=set(['created_at']),
@@ -87,6 +88,11 @@ async def insert(
     anti_everyone_mention:bool=None,
     anti_everyone_mention_limit:int=None,
     anti_everyone_mention_punishment:str=None,
+    wall_on:bool=None,
+    autorecovery:bool=None,
+    zplus:bool=None,
+    betrayalguard:bool=None,
+    trustlimit:int=None,
     created_at:str=None
 ):
     return await _store.insert(locals())
@@ -161,6 +167,11 @@ async def update(
     anti_everyone_mention:bool=None,
     anti_everyone_mention_limit:int=None,
     anti_everyone_mention_punishment:str=None,
+    wall_on:bool=None,
+    autorecovery:bool=None,
+    zplus:bool=None,
+    betrayalguard:bool=None,
+    trustlimit:int=None,
     created_at:str=None
 ):
     return await _store.update(locals())
@@ -235,6 +246,11 @@ async def get(
     anti_everyone_mention:bool=None,
     anti_everyone_mention_limit:int=None,
     anti_everyone_mention_punishment:str=None,
+    wall_on:bool=None,
+    autorecovery:bool=None,
+    zplus:bool=None,
+    betrayalguard:bool=None,
+    trustlimit:int=None,
     created_at:str=None
 ):
     return await _store.get(locals())
@@ -309,6 +325,11 @@ async def gets(
     anti_everyone_mention:bool=None,
     anti_everyone_mention_limit:int=None,
     anti_everyone_mention_punishment:str=None,
+    wall_on:bool=None,
+    autorecovery:bool=None,
+    zplus:bool=None,
+    betrayalguard:bool=None,
+    trustlimit:int=None,
     created_at:str=None
 ):
     return await _store.gets(locals())
@@ -383,6 +404,11 @@ async def delete(
     anti_everyone_mention:bool=None,
     anti_everyone_mention_limit:int=None,
     anti_everyone_mention_punishment:str=None,
+    wall_on:bool=None,
+    autorecovery:bool=None,
+    zplus:bool=None,
+    betrayalguard:bool=None,
+    trustlimit:int=None,
     created_at:str=None
 ):
     return await _store.delete(locals())

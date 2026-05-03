@@ -1,12 +1,13 @@
+from __future__ import annotations
 from storage.engine import CollectionStore, NOW
 
 CollectionName = 'automod'
 
 _store = CollectionStore(
     name=CollectionName,
-    defaults={'antilink_enabled': False, 'antilink_whitelist_roles': [], 'antilink_whitelist_channels': [], 'antispam_enabled': False, 'antispam_whitelist_roles': [], 'antispam_whitelist_channels': [], 'antispam_max_messages': 10, 'antispam_max_interval': 30, 'antispam_max_mentions': 5, 'antispam_max_emojis': 10, 'antispam_max_caps': 50, 'antispam_punishment': 'mute', 'antispam_punishment_duration': 10, 'antibadwords_enabled': False, 'antibadwords_whitelist_roles': [], 'antibadwords_whitelist_channels': [], 'antibadwords_words': [], 'created_at': NOW},
+    defaults={'antilink_enabled': False, 'antilink_whitelist_roles': [], 'antilink_whitelist_channels': [], 'antispam_enabled': False, 'antispam_whitelist_roles': [], 'antispam_whitelist_channels': [], 'antispam_max_messages': 10, 'antispam_max_interval': 30, 'antispam_max_mentions': 5, 'antispam_max_emojis': 10, 'antispam_max_caps': 50, 'antispam_punishment': 'mute', 'antispam_punishment_duration': 10, 'antibadwords_enabled': False, 'antibadwords_whitelist_roles': [], 'antibadwords_whitelist_channels': [], 'antibadwords_words': [], 'log_channel_id': None, 'ignored_users': [], 'ignored_roles': [], 'ignored_channels': [], 'heat_max_messages': 5, 'heat_interval': 5, 'automute_threshold': 3, 'automute_duration': 600, 'created_at': NOW},
     unique_sets=[['guild_id']],
-    json_fields=set(['antibadwords_whitelist_channels', 'antibadwords_whitelist_roles', 'antibadwords_words', 'antilink_whitelist_channels', 'antilink_whitelist_roles', 'antispam_whitelist_channels', 'antispam_whitelist_roles']),
+    json_fields=set(['antibadwords_whitelist_channels', 'antibadwords_whitelist_roles', 'antibadwords_words', 'antilink_whitelist_channels', 'antilink_whitelist_roles', 'antispam_whitelist_channels', 'antispam_whitelist_roles', 'ignored_users', 'ignored_roles', 'ignored_channels']),
     datetime_fields=set(['created_at']),
     sequence_fields={},
     update_cache=('automod_cache', ['guild_id']),
@@ -39,6 +40,14 @@ async def insert(
     antibadwords_whitelist_roles:list=None,
     antibadwords_whitelist_channels:list=None,
     antibadwords_words:list=None,
+    log_channel_id:int=None,
+    ignored_users:list=None,
+    ignored_roles:list=None,
+    ignored_channels:list=None,
+    heat_max_messages:int=None,
+    heat_interval:int=None,
+    automute_threshold:int=None,
+    automute_duration:int=None,
     created_at:str=None
 ):
     return await _store.insert(locals())
@@ -66,6 +75,14 @@ async def update(
     antibadwords_whitelist_roles:list=None,
     antibadwords_whitelist_channels:list=None,
     antibadwords_words:list=None,
+    log_channel_id:int=None,
+    ignored_users:list=None,
+    ignored_roles:list=None,
+    ignored_channels:list=None,
+    heat_max_messages:int=None,
+    heat_interval:int=None,
+    automute_threshold:int=None,
+    automute_duration:int=None,
     created_at:str=None
 ):
     return await _store.update(locals())
@@ -93,6 +110,14 @@ async def get(
     antibadwords_whitelist_roles:list=None,
     antibadwords_whitelist_channels:list=None,
     antibadwords_words:list=None,
+    log_channel_id:int=None,
+    ignored_users:list=None,
+    ignored_roles:list=None,
+    ignored_channels:list=None,
+    heat_max_messages:int=None,
+    heat_interval:int=None,
+    automute_threshold:int=None,
+    automute_duration:int=None,
     created_at:str=None
 ):
     return await _store.get(locals())
@@ -120,6 +145,14 @@ async def gets(
     antibadwords_whitelist_roles:list=None,
     antibadwords_whitelist_channels:list=None,
     antibadwords_words:list=None,
+    log_channel_id:int=None,
+    ignored_users:list=None,
+    ignored_roles:list=None,
+    ignored_channels:list=None,
+    heat_max_messages:int=None,
+    heat_interval:int=None,
+    automute_threshold:int=None,
+    automute_duration:int=None,
     created_at:str=None
 ):
     return await _store.gets(locals())
@@ -147,6 +180,14 @@ async def delete(
     antibadwords_whitelist_roles:list=None,
     antibadwords_whitelist_channels:list=None,
     antibadwords_words:list=None,
+    log_channel_id:int=None,
+    ignored_users:list=None,
+    ignored_roles:list=None,
+    ignored_channels:list=None,
+    heat_max_messages:int=None,
+    heat_interval:int=None,
+    automute_threshold:int=None,
+    automute_duration:int=None,
     created_at:str=None
 ):
     return await _store.delete(locals())

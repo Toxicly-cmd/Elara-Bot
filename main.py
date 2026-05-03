@@ -1,3 +1,4 @@
+from __future__ import annotations
 import asyncio
 import traceback
 
@@ -5,9 +6,9 @@ import discord
 import discord.http
 import uvicorn
 
-from reo.engine.Bot import AutoShardedBot
-from reo.console.logging import logger
-from reo.config.config import BotConfigClass
+from Elara.engine.Bot import AutoShardedBot
+from Elara.console.logging import logger
+from Elara.config.config import BotConfigClass
 
 BotConfig = BotConfigClass()
 bot = AutoShardedBot()
@@ -15,9 +16,9 @@ bot = AutoShardedBot()
 
 async def main():
     try:
-        from reo.workflows.bootstrap import prepare_runtime
-        from reo.surface import server as surface_server
-        from reo.style.sync_emojis import run_sync
+        from Elara.workflows.bootstrap import prepare_runtime
+        from Elara.surface import server as surface_server
+        from Elara.style.sync_emojis import run_sync
 
         await prepare_runtime()
         surface_server.bind_bot(bot)
@@ -30,7 +31,7 @@ async def main():
             logger.info("EmojiSync is currently disabled via config.")
         logger.separator()
         
-        await bot.load_extension("reo.src")
+        await bot.load_extension("Elara.src")
 
         tasks = []
 

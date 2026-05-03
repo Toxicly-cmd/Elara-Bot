@@ -1,10 +1,11 @@
+from __future__ import annotations
 from storage.engine import CollectionStore, NOW
 
 CollectionName = 'music'
 
 _store = CollectionStore(
     name=CollectionName,
-    defaults={'default_volume': 80, 'default_repeat': False, 'default_autoplay': False, 'created_at': NOW},
+    defaults={'default_volume': 80, 'default_repeat': False, 'default_autoplay': False, 'stay_24_7': False, 'created_at': NOW},
     unique_sets=[['guild_id']],
     json_fields=set([]),
     datetime_fields=set(['created_at']),
@@ -25,6 +26,7 @@ async def insert(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.insert(locals())
@@ -38,6 +40,7 @@ async def update(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.update(locals())
@@ -51,6 +54,7 @@ async def get(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.get(locals())
@@ -64,6 +68,7 @@ async def gets(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.gets(locals())
@@ -77,6 +82,7 @@ async def delete(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.delete(locals())
@@ -93,6 +99,7 @@ async def count(
     default_volume:int=None,
     default_repeat:bool=None,
     default_autoplay:bool=None,
+    stay_24_7:bool=None,
     created_at:str=None
 ):
     return await _store.count(locals())

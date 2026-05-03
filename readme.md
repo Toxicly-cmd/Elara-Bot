@@ -1,6 +1,6 @@
-# REO
+# ELARA
 
-Reo is a modern, multipurpose Discord bot featuring a seamless web dashboard, comprehensive server security, advanced music playback, and automated community management tools.
+Elara is a modern, multipurpose Discord bot featuring a seamless web dashboard, comprehensive server security, advanced music playback, and automated community management tools.
 
 ## Showcase
 
@@ -41,9 +41,9 @@ Reo is a modern, multipurpose Discord bot featuring a seamless web dashboard, co
 ## Project Layout
 
 - `main.py` - bot entry point
-- `reo/src` - commands, events, and runtime modules
-- `reo/surface` - dashboard and web routes
-- `reo/engine` - bot core
+- `Elara/src` - commands, events, and runtime modules
+- `Elara/surface` - dashboard and web routes
+- `Elara/engine` - bot core
 - `storage` - Mongo-backed storage layer
 - `.env` - local environment config
 
@@ -66,7 +66,7 @@ PREFIX=""
 
 SHARD_COUNT=""
 
-BOT_NAME="Reo"
+BOT_NAME="Elara"
 
 # Web / API Hosting
 WEB_HOST="0.0.0.0"
@@ -136,4 +136,4 @@ Login with Discord, choose a server you manage, and configure it from the dashbo
 
 MIT License
 
-Copyright (c) 2026 Codex Development
+Copyright (c) 2026 Toxic (7ox4)

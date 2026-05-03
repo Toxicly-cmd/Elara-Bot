@@ -1,3 +1,4 @@
+from __future__ import annotations
 from storage.engine import CollectionStore, NOW
 
 CollectionName = 'custom_roles'

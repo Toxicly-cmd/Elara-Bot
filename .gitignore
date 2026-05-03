@@ -93,3 +93,4 @@ venv.bak/
 ehthumbs.db
 ehthumbs_vista.db
 [Tt]humbs.db
+.env

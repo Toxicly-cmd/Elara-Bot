@@ -9,8 +9,8 @@ from typing import Any
 
 from pymongo import ReturnDocument
 
-from reo.bridge.storage import get_collection
-from reo.console.logging import logger
+from Elara.bridge.storage import get_collection
+from Elara.console.logging import logger
 
 NOW = object()
 
@@ -22,7 +22,11 @@ def _utc_now() -> datetime:
 def _clean_document(document: dict[str, Any] | None, datetime_fields: set[str] | None = None) -> dict[str, Any] | None:
     if not document:
         return None
-    cleaned = dict(document)
+    try:
+        cleaned = dict(document)
+    except Exception as e:
+        logger.error(f"Failed to clean document: {document} (Type: {type(document)}) - Error: {e}")
+        raise e
     cleaned.pop('_id', None)
     if datetime_fields:
         for field_name in datetime_fields:
@@ -38,7 +42,7 @@ def _clone_default(value: Any) -> Any:
     return deepcopy(value)
 
 
-@dataclass(slots=True)
+@dataclass
 class CollectionStore:
     name: str
     defaults: dict[str, Any] = field(default_factory=dict)
@@ -85,7 +89,25 @@ class CollectionStore:
             document['id'] = await self._next_sequence(f'{self.name}:id', {})
 
         collection = await self._collection()
-        await collection.insert_one(document)
+        try:
+            await collection.insert_one(document)
+        except Exception as e:
+            # Check if it's a duplicate key error (usually code 11000)
+            if getattr(e, 'code', None) == 11000:
+                # Attempt to recover by fetching the existing document
+                # We prioritize guild_id if available, otherwise just return None or raise
+                search_query = {}
+                if 'guild_id' in document:
+                    search_query['guild_id'] = document['guild_id']
+                elif 'id' in document:
+                    search_query['id'] = document['id']
+                
+                if search_query:
+                    result = await self.get(search_query)
+                    if result:
+                        return result
+            raise e
+            
         result = await self.get({'id': document['id']})
         await self._trigger_update_hook(result)
         return result
@@ -156,11 +178,19 @@ class CollectionStore:
             await self._trigger_delete_hook(document)
         return overflow
 
-    async def adjust_field(self, *, filters: dict[str, Any], field: str, delta: int | float) -> dict[str, Any] | None:
+    async def adjust_field(self, *, filters: dict[str, Any], field: str, delta: Union[int, float], upsert: bool = False) -> dict[str, Any] | None:
         prepared = self._build_filters(filters)
         current = await self.get(prepared)
         if not current:
+            if upsert:
+                await self.insert(prepared)
+                current = await self.get(prepared)
+            else:
+                return None
+        
+        if not current:
             return None
+            
         existing_value = current.get(field, 0) or 0
         if isinstance(existing_value, bool):
             existing_value = int(existing_value)
@@ -213,7 +243,7 @@ class CollectionStore:
 
     async def _call_cache(self, cache_name: str, method_name: str, kwargs: dict[str, Any]) -> None:
         try:
-            from reo.workflows import cache as cache_module
+            from Elara.workflows import cache as cache_module
 
             cache_handler = getattr(cache_module, cache_name, None)
             if cache_handler is None:
