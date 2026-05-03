@@ -2800,7 +2800,7 @@ class Welcomer(commands.Cog):
                         row=0,
                     )
 
-                    autoroles_sorted = json.loads(welcomer_cache.get("autoroles", []))
+                    autoroles_sorted = welcomer_cache.get("autoroles", [])
 
                     autoroles_sorted = (
                         autoroles_sorted[
@@ -2918,7 +2918,7 @@ class Welcomer(commands.Cog):
                     await storage.welcomer_settings.update(
                         id=welcomer_cache.get("id"),
                         guild_id=ctx.guild.id,
-                        autoroles=json.dumps(roles),
+                        autoroles=roles,
                     )
 
                     await interaction.message.edit(
@@ -3533,22 +3533,20 @@ class Welcomer(commands.Cog):
                         greet_channel_limit = 5
 
                     if (
-                        len(json.loads(welcomer_cache.get("greet_channels", "[]")))
+                        len(welcomer_cache.get("greet_channels", []))
                         > greet_channel_limit
                     ):
 
                         # delete from last
 
-                        json_greet_channels = json.loads(
-                            welcomer_cache.get("greet_channels", "[]")
-                        )
+                        json_greet_channels = welcomer_cache.get("greet_channels", [])
 
                         json_greet_channels = json_greet_channels[:greet_channel_limit]
 
                         await storage.welcomer_settings.update(
                             id=welcomer_cache.get("id"),
                             guild_id=ctx.guild.id,
-                            greet_channels=json.dumps(json_greet_channels),
+                            greet_channels=json_greet_channels,
                         )
 
                         welcomer_cache = cache.welcomer_settings.get(
@@ -3564,11 +3562,9 @@ class Welcomer(commands.Cog):
                         default_values=(
                             [
                                 ctx.guild.get_channel(int(greet_channel))
-                                for greet_channel in json.loads(
-                                    welcomer_cache.get("greet_channels", "[]")
-                                )
+                                for greet_channel in welcomer_cache.get("greet_channels", [])
                             ]
-                            if json.loads(welcomer_cache.get("greet_channels", "[]"))
+                            if welcomer_cache.get("greet_channels")
                             else []
                         ),
                     )
@@ -3845,9 +3841,7 @@ class Welcomer(commands.Cog):
                     await storage.welcomer_settings.update(
                         id=welcomer_cache.get("id"),
                         guild_id=ctx.guild.id,
-                        greet_channels=json.dumps(
-                            [int(channel) for channel in channel]
-                        ),
+                        greet_channels=[int(channel) for channel in channel],
                     )
 
                     await interaction.message.edit(
